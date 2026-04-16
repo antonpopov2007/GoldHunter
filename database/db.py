@@ -3,7 +3,13 @@ from sqlalchemy.orm import sessionmaker
 from database.models import Base
 from config import DATABASE_URL
 
-engine = create_engine(DATABASE_URL, echo=False)
+# SQLAlchemy 1.4+ требует, чтобы префикс был postgresql://, а не postgres://
+if DATABASE_URL.startswith("postgres://"):
+    db_url = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+else:
+    db_url = DATABASE_URL
+
+engine = create_engine(db_url, echo=False)
 Session = sessionmaker(bind=engine)
 
 

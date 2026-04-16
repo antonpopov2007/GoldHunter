@@ -2,9 +2,11 @@
 # GoldHunter — Конфигурация
 # ============================
 
-# БД: SQLite для локальной разработки
-# При деплое заменить на PostgreSQL URL (Supabase и т.п.)
-DATABASE_URL = "sqlite:///goldhunter.db"
+import os
+
+# БД: по умолчанию SQLite для локальной разработки
+# При деплое (в GitHub Actions) будет браться из секретов окружения
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///goldhunter.db")
 
 # Пробы золота и содержание чистого металла
 GOLD_PROBES = {
